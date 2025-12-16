@@ -3625,21 +3625,21 @@
                         <div className="form-group">
                             <label className="form-label">Desde:</label>
                             <input
-  type="date"
-  className="form-select"
-  value={startDate || ''}
-  onChange={(e) => setStartDate(e.target.value)}
-/>
+                                type="date"
+                                className="form-select"
+                               value={startDate || ''}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            />
                         </div>
 
                         <div className="form-group">
                             <label className="form-label">Hasta:</label>
                             <input
-  type="date"
-  className="form-select"
-  value={startDate || ''}
-  onChange={(e) => setStartDate(e.target.value)}
-/>
+                                type="date"
+                                className="form-select"
+                                value={endDate || ''}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            />
                             {!endDate && startDate && (
                                 <div style={{fontSize: '12px', color: '#6b7280', marginTop: '5px'}}>
                                     Opcional: déjalo vacío si es un solo día
@@ -5823,7 +5823,7 @@
                             <input 
                                 type="date" 
                                 className="form-input"
-                                value={filterDate || ''}
+                               value={filterDate || ''}
                                 onChange={(e) => setFilterDate(e.target.value)}
                             />
                         </div>
