@@ -2886,15 +2886,17 @@
                                 ) : (
                                     <>
                                         <div style={{marginBottom: '20px', textAlign: 'center'}}>
+                                            {capturedImage && ( 
                                             <img
                                                 src={capturedImage}
                                                 alt="Captura"
                                                 style={{
-                                                    maxWidth: '100%',
-                                                    borderRadius: '10px',
-                                                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                                                }}
+                                                maxWidth: '100%',
+                                            borderRadius: '10px',
+                                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                                            }}
                                             />
+                                            )}
                                         </div>
                                         
                                         {processing ? (
@@ -2938,20 +2940,20 @@
                                         <div style={{display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap'}}>
                                             {/* Foto */}
                                             <div style={{flexShrink: 0}}>
-                                                {isRegistered ? (
-                                                    <img
-                                                        src={isRegistered.photoBase64}
-                                                        alt={worker.nombre}
-                                                        style={{
-                                                            width: '100px',
-                                                            height: '100px',
-                                                            borderRadius: '50%',
-                                                            objectFit: 'cover',
-                                                            border: '3px solid #10b981'
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <div style={{
+                                                {isRegistered?.photoBase64 && (
+                                                <img
+                                                    src={isRegistered.photoBase64}
+                                                    alt={trabajador?.nombre || 'Trabajador'}
+                                                style={{
+                                                width: '100px',
+                                                height: '100px',
+                                                borderRadius: '50%',
+                                                objectFit: 'cover',
+                                                border: '3px solid #10b981'
+                                                }}
+                                                />
+                                                )}                                                    
+                                                <div style={{
                                                         width: '100px',
                                                         height: '100px',
                                                         borderRadius: '50%',
