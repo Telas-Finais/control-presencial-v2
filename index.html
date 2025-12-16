@@ -3639,7 +3639,7 @@
                                 className="form-select"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
-                                min={startDate}
+                               min={startDate || undefined}
                             />
                             {!endDate && startDate && (
                                 <div style={{fontSize: '12px', color: '#6b7280', marginTop: '5px'}}>
