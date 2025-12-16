@@ -3624,23 +3624,22 @@
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px'}}>
                         <div className="form-group">
                             <label className="form-label">Desde:</label>
-                            <input 
-                                type="date"
-                                className="form-select"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                            />
+                            <input
+  type="date"
+  className="form-select"
+  value={startDate || ''}
+  onChange={(e) => setStartDate(e.target.value)}
+/>
                         </div>
 
                         <div className="form-group">
                             <label className="form-label">Hasta:</label>
-                            <input 
-                                type="date"
-                                className="form-select"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                               min={startDate || undefined}
-                            />
+                            <input
+  type="date"
+  className="form-select"
+  value={startDate || ''}
+  onChange={(e) => setStartDate(e.target.value)}
+/>
                             {!endDate && startDate && (
                                 <div style={{fontSize: '12px', color: '#6b7280', marginTop: '5px'}}>
                                     Opcional: déjalo vacío si es un solo día
@@ -5620,7 +5619,7 @@
                                 <input
                                     type="date"
                                     className="form-select"
-                                    value={filters.fechaDesde}
+                                    value={filters.fechaDesde || ''}
                                     onChange={(e) => setFilters({...filters, fechaDesde: e.target.value})}
                                     style={{width: '100%'}}
                                 />
@@ -5634,7 +5633,7 @@
                                 <input
                                     type="date"
                                     className="form-select"
-                                    value={filters.fechaHasta}
+                                    value={filters.fechaHasta || ''}
                                     onChange={(e) => setFilters({...filters, fechaHasta: e.target.value})}
                                     style={{width: '100%'}}
                                 />
@@ -5824,7 +5823,7 @@
                             <input 
                                 type="date" 
                                 className="form-input"
-                                value={filterDate}
+                                value={filterDate || ''}
                                 onChange={(e) => setFilterDate(e.target.value)}
                             />
                         </div>
