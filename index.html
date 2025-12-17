@@ -5941,17 +5941,23 @@
                                 } catch (err) {
                                     console.warn('Error cargando nombre obra:', err);
                                 }
-                                
-                                location: {
+                                return {
+                                    id: c.id,
+                                    workerId: c.worker_id,
+                                    worksiteId: c.worksite_id,
+                                    worksiteName,
+                                    location: {
                                         lat: c.worker_lat,
                                         lng: c.worker_lng
                                     },
                                     distance: c.distancia_metros,
                                     gpsValid: c.dentro_rango,
                                     faceRecognized: false,
-                                    photo: null
+                                    photo: null,
+                                    timestamp: c.timestamp
                                 };
-                            }));
+                            })
+                        );
                             setClockings(formattedClockings);
                             console.log('✅ Fichajes cargados desde Supabase:', formattedClockings.length);
                         } else {
