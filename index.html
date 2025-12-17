@@ -923,8 +923,9 @@
 const SUPABASE_URL = 'https://azbebkpnsldielcztfhp.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6YmVia3Buc2xkaWVsY3p0ZmhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU3MzIyMzUsImV4cCI6MjA4MTMwODIzNX0.KzOu_5f6w7aZPZCHE-6uD1m-vpxQnP9t9pBUb_1XGoo';
 
-const supabase = window.supabase = window.supabase || 
-  supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = window.supabase =
+  window.supabase ||
+  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Datos de la empresa - TODOS LOS 33 TRABAJADORES
         const COMPANY_DATA = {
