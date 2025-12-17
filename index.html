@@ -914,7 +914,7 @@
 </head>
 <body>
     <div id="root"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
         // ===============================
@@ -5912,27 +5912,8 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             const [notification, setNotification] = useState(null);
             const [activeTab, setActiveTab] = useState('clock');
 
-            useEffect(() => {
-                // Cargar datos desde Supabase
-                const loadDataFromSupabase = async () => {
-                    try {
-                        // Cargar trabajadores desde Supabase
-                        const workersResult = await supabase.from('workers').insert(worker);
-                        if (workersResult.data && workersResult.data.length > 0) {
-                            const formattedWorkers = workersResult.data.map(w => ({
-                                id: w.id,
-                                nombre: w.nombre,
-                                usuario: w.usuario,
-                                password: w.password
-                            }));
-                            setWorkers(formattedWorkers);
-                            console.log('✅ Trabajadores cargados desde Supabase:', formattedWorkers.length);
-                        } else {
-                            // Fallback a datos locales si Supabase falla
-                            setWorkers(COMPANY_DATA.trabajadores);
-                            console.log('⚠️ Usando trabajadores locales (Supabase vacío)');
-                        }
-                        
+             loadDataFromSupabase();
+}, []);
                         // Cargar fichajes desde Supabase
                         const clockingsResult = await supabase.from('clockings').select('*');
 
