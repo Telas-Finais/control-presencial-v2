@@ -39,46 +39,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-                      // UPDATE: Actualizar registros
-            async update(table, id, updates) {
-                try {
-                    
-                    const response = await fetch(url, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Prefer': 'return=representation'
-                        },
-                        body: JSON.stringify(updates)
-                    });
-                    
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
-                    return { data, error: null };
-                } catch (error) {
-                    return { data: null, error };
-                }
-            },
-            
-            // DELETE: Eliminar registros
-            async delete(table, id) {
-                try {
-                    
-                    const response = await fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                        }
-                    });
-                    
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    return { data: null, error: null };
-                } catch (error) {
-                    return { data: null, error };
-                }
-            }
-        };
-        
-    </script>
     <style>
         * {
             margin: 0;
@@ -954,9 +914,7 @@
 </head>
 <body>
     <div id="root"></div>
-
-    
-
+    <script type="text/babel">
         // Datos de la empresa - TODOS LOS 33 TRABAJADORES
         const COMPANY_DATA = {
             obras: [
@@ -6442,6 +6400,7 @@
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-<script type="module" src="app.js"></script>
+<!-- <script type="module" src="app.js"></script> -->
+</script>
 </body>
 </html>
