@@ -5908,11 +5908,40 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             const [currentUser, setCurrentUser] = useState(null);
             const [clockings, setClockings] = useState([]);
             const [absences, setAbsences] = useState([]);
-            const [workers, setWorkers] = useState([]);
             const [notification, setNotification] = useState(null);
             const [activeTab, setActiveTab] = useState('clock');
+          useEffect(() => {
+  const loadDataFromSupabase = async () => {
+    try {
+      // 👷 Trabajadores
+      const workersResult = await supabase
+        .from('trabajadores')
+        .select('*');
 
-             loadDataFromSupabase();
+      if (workersResult.data && workersResult.data.length > 0) {
+        setWorkers(workersResult.data);
+        console.log('✅ Trabajadores cargados desde Supabase');
+      } else {
+        setWorkers(COMPANY_DATA.trabajadores);
+        console.log('⚠️ Usando trabajadores locales');
+      }
+
+      // ⏱️ Fichajes
+      const clockingsResult = await supabase
+        .from('clockings')
+        .select('*');
+
+      if (clockingsResult.data) {
+        setClockings(clockingsResult.data);
+      }
+
+    } catch (err) {
+      console.error('❌ Error cargando datos:', err);
+      setWorkers(COMPANY_DATA.trabajadores);
+    }
+  };
+
+  loadDataFromSupabase();
 }, []);
                         // Cargar fichajes desde Supabase
                         const clockingsResult = await supabase.from('clockings').select('*');
