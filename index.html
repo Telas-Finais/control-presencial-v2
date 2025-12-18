@@ -5903,46 +5903,107 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         };
 
         // Componente Principal
-        const App = () => {
-            const { t, language, changeLanguage } = useTranslation();
-            const [currentUser, setCurrentUser] = useState(null);
-            const [clockings, setClockings] = useState([]);
-            const [absences, setAbsences] = useState([]);
-            const [notification, setNotification] = useState(null);
-            const [activeTab, setActiveTab] = useState('clock');
-          useEffect(() => {
-  const loadDataFromSupabase = async () => {
-    try {
-      // 👷 Trabajadores
-      const workersResult = await supabase
-        .from('trabajadores')
-        .select('*');
+      const App = () => {
 
-      if (workersResult.data && workersResult.data.length > 0) {
-        setWorkers(workersResult.data);
-        console.log('✅ Trabajadores cargados desde Supabase');
-      } else {
+  // 1️⃣ STATES (todos aquí)
+  const { t, language, changeLanguage } = useTranslation();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [workers, setWorkers] = useState([]);
+  const [clockings, setClockings] = useState([]);
+  const [absences, setAbsences] = useState([]);
+  const [notification, setNotification] = useState(null);
+  const [activeTab, setActiveTab] = useState('clock');
+
+  // 2️⃣ useEffect (solo lógica, NUNCA JSX aquí)
+  useEffect(() => {
+
+    const loadDataFromSupabase = async () => {
+      try {
+        // 👷 Trabajadores
+        const workersResult = await supabase
+          .from('trabajadores')
+          .select('*');
+
+        if (workersResult.data && workersResult.data.length > 0) {
+          setWorkers(workersResult.data);
+          console.log('✅ Trabajadores cargados desde Supabase');
+        } else {
+          setWorkers(COMPANY_DATA.trabajadores);
+          console.log('⚠️ Usando trabajadores locales');
+        }
+
+        // ⏱️ Fichajes
+        const clockingsResult = await supabase
+          .from('clockings')
+          .select('*');
+
+        if (clockingsResult.data) {
+          setClockings(clockingsResult.data);
+        }
+
+      } catch (err) {
+        console.error('❌ Error cargando datos:', err);
         setWorkers(COMPANY_DATA.trabajadores);
-        console.log('⚠️ Usando trabajadores locales');
       }
+    };
 
-      // ⏱️ Fichajes
-      const clockingsResult = await supabase
-        .from('clockings')
-        .select('*');
+    loadDataFromSupabase();
 
-      if (clockingsResult.data) {
-        setClockings(clockingsResult.data);
-      }
+  }, []); // 👈 cierre CORRECTO del useEffect
 
-    } catch (err) {
-      console.error('❌ Error cargando datos:', err);
-      setWorkers(COMPANY_DATA.trabajadores);
-    }
-  };
+  // 3️⃣ RETURN (OBLIGATORIO)
+  return (
+    <div className="container">
 
-  loadDataFromSupabase();
-}, []);
+      {/* HEADER */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+        <button onClick={() => changeLanguage('es')}>ES Español</button>
+        <button onClick={() => changeLanguage('pt')}>PT Português</button>
+      </div>
+
+      {/* LOGIN */}
+      {!currentUser && (
+        <Login
+          workers={workers}
+          onLogin={setCurrentUser}
+        />
+      )}
+
+      {/* APP PRINCIPAL */}
+      {currentUser && (
+        <>
+          <Navbar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            user={currentUser}
+          />
+
+          {activeTab === 'clock' && (
+            <Clocking
+              user={currentUser}
+              workers={workers}
+              clockings={clockings}
+            />
+          )}
+
+          {activeTab === 'admin' && (
+            <AdminPanel
+              workers={workers}
+              setWorkers={setWorkers}
+            />
+          )}
+        </>
+      )}
+
+      {/* NOTIFICACIONES */}
+      {notification && (
+        <Notification {...notification} />
+      )}
+
+    </div>
+  );
+};
+
                         // Cargar fichajes desde Supabase
                         const clockingsResult = await supabase.from('clockings').select('*');
 
