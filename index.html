@@ -5905,19 +5905,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Componente Principal
 // ===============================
 const App = () => {
-
-  const { t, language, changeLanguage } = useTranslation();
-
+  const [currentUser, setCurrentUser] = useState(null);
   const [workers, setWorkers] = useState([]);
   const [clockings, setClockings] = useState([]);
-  const [absences, setAbsences] = useState([]);
-  const [notification, setNotification] = useState(null);
   const [activeTab, setActiveTab] = useState('clock');
 
   useEffect(() => {
     const loadDataFromSupabase = async () => {
       try {
-        // 👷 Trabajadores
+        // 👷‍♂️ TRABAJADORES
         const workersResult = await supabase
           .from('trabajadores')
           .select('*');
@@ -5927,20 +5923,21 @@ const App = () => {
           console.log('✅ Trabajadores cargados desde Supabase');
         } else {
           setWorkers(COMPANY_DATA.trabajadores);
-          console.log('⚠️ Usando trabajadores locales');
+          console.warn('⚠️ Supabase vacío → usando COMPANY_DATA');
         }
 
-        // ⏱️ Fichajes
+        // ⏱️ FICHAJES
         const clockingsResult = await supabase
           .from('clockings')
           .select('*');
 
         if (clockingsResult.data) {
           setClockings(clockingsResult.data);
+          console.log('✅ Fichajes cargados desde Supabase');
         }
 
-      } catch (err) {
-        console.error('❌ Error cargando datos:', err);
+      } catch (error) {
+        console.error('❌ Error cargando datos:', error);
         setWorkers(COMPANY_DATA.trabajadores);
       }
     };
@@ -5948,11 +5945,33 @@ const App = () => {
     loadDataFromSupabase();
   }, []);
 
-  // ⬇️ ESTE RETURN ES OBLIGATORIO
   return (
     <div className="container">
-      <h1>Sistema de Control de Presencia</h1>
-      {/* aquí sigue tu JSX real */}
+      <header className="app-header">
+        <div className="app-title">
+          🕒 Sistema de Control de Presencia
+        </div>
+      </header>
+
+      <div className="card">
+        <h2>Trabajadores cargados: {workers.length}</h2>
+        <h3>Fichajes cargados: {clockings.length}</h3>
+
+        <div className="tabs">
+          <button
+            className={`tab ${activeTab === 'clock' ? 'active' : ''}`}
+            onClick={() => setActiveTab('clock')}
+          >
+            Fichar
+          </button>
+          <button
+            className={`tab ${activeTab === 'monitor' ? 'active' : ''}`}
+            onClick={() => setActiveTab('monitor')}
+          >
+            Monitor
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
