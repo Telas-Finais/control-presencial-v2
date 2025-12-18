@@ -5902,21 +5902,19 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             );
         };
 
-        // Componente Principal
-      const App = () => {
+// Componente Principal
+// ===============================
+const App = () => {
 
-  // 1️⃣ STATES (todos aquí)
   const { t, language, changeLanguage } = useTranslation();
-  const [currentUser, setCurrentUser] = useState(null);
+
   const [workers, setWorkers] = useState([]);
   const [clockings, setClockings] = useState([]);
   const [absences, setAbsences] = useState([]);
   const [notification, setNotification] = useState(null);
   const [activeTab, setActiveTab] = useState('clock');
 
-  // 2️⃣ useEffect (solo lógica, NUNCA JSX aquí)
   useEffect(() => {
-
     const loadDataFromSupabase = async () => {
       try {
         // 👷 Trabajadores
@@ -5948,58 +5946,13 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
     };
 
     loadDataFromSupabase();
+  }, []);
 
-  }, []); // 👈 cierre CORRECTO del useEffect
-
-  // 3️⃣ RETURN (OBLIGATORIO)
+  // ⬇️ ESTE RETURN ES OBLIGATORIO
   return (
     <div className="container">
-
-      {/* HEADER */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-        <button onClick={() => changeLanguage('es')}>ES Español</button>
-        <button onClick={() => changeLanguage('pt')}>PT Português</button>
-      </div>
-
-      {/* LOGIN */}
-      {!currentUser && (
-        <Login
-          workers={workers}
-          onLogin={setCurrentUser}
-        />
-      )}
-
-      {/* APP PRINCIPAL */}
-      {currentUser && (
-        <>
-          <Navbar
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            user={currentUser}
-          />
-
-          {activeTab === 'clock' && (
-            <Clocking
-              user={currentUser}
-              workers={workers}
-              clockings={clockings}
-            />
-          )}
-
-          {activeTab === 'admin' && (
-            <AdminPanel
-              workers={workers}
-              setWorkers={setWorkers}
-            />
-          )}
-        </>
-      )}
-
-      {/* NOTIFICACIONES */}
-      {notification && (
-        <Notification {...notification} />
-      )}
-
+      <h1>Sistema de Control de Presencia</h1>
+      {/* aquí sigue tu JSX real */}
     </div>
   );
 };
